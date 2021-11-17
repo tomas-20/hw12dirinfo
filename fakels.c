@@ -8,10 +8,10 @@ void fakels(char *dirname) {
     char *filename = entry->d_name;
     printf("%s ", filename);
   }
+  closedir(dir);
   printf("\n");
 }
 
 int main() {
   fakels("sandwich");
-  return 0;
 }
