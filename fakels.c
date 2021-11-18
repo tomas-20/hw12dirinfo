@@ -33,11 +33,17 @@ void show_files(DIR *dir, int type) {
 
 void fakels(char *dir_name) {
   DIR *dir = opendir(dir_name);
-  printf("Directory size: %d\n", get_dir_size(dir, dir_name));
-  printf("Directories:\n");
-  show_files(dir, DT_DIR);
-  printf("Regular files:\n");
-  show_files(dir, DT_REG);
+  if (dir) {
+    printf("Directory size: %d\n", get_dir_size(dir, dir_name));
+    printf("Directories:\n");
+    show_files(dir, DT_DIR);
+    printf("Regular files:\n");
+    show_files(dir, DT_REG);
+    closedir(dir);
+  }
+  else {
+    printf("Directory does not exist\n");
+  }
 }
 
 int main() {
