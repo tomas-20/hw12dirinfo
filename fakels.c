@@ -13,12 +13,9 @@ int get_dir_size(DIR *dir, char *dir_name) {
   int dir_size = 0;
   chdir(dir_name);
   rewinddir(dir);
-  for (struct dirent *entry; (entry = readdir(dir));) {
-    int file_type = entry->d_type;
-    if (file_type == DT_REG) {
-      char *file_name = entry->d_name;
-      int file_size = get_file_size(file_name);
-      dir_size += file_size;
+  for (struct dirent *file; (file = readdir(dir));) {
+    if (file->d_type == DT_REG) {
+      dir_size += get_file_size(file->d_name);
     }
   }
   chdir("..");
@@ -27,11 +24,9 @@ int get_dir_size(DIR *dir, char *dir_name) {
 
 void show_files(DIR *dir, int type) {
   rewinddir(dir);
-  for (struct dirent *entry; (entry = readdir(dir));) {
-    int file_type = entry->d_type;
-    if (file_type == type) {
-      char *file_name = entry->d_name;
-      printf("  %s\n", file_name);
+  for (struct dirent *file; (file = readdir(dir));) {
+    if (file->d_type == type) {
+      printf("  %s\n", file->d_name);
     }
   }
 }
